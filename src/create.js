@@ -9,19 +9,26 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 module.exports.create = (event, context, callback) => {
   const timestamp = new Date().getTime();
   //const data = JSON.parse(event.body);
-  const data = event;
-  console.log('##########################################################################');
-  console.log(event);
-  console.log(data);
-  console.log('##########################################################################');
-  debugger;
+  const data = JSON.parse(event.body);
+  if (typeof data.text !== 'string') {
+    console.error('Validation Failed');
+    callback(null, {
+      statusCode: constante.ESTADO_RESPONSE.RES_400,
+      headers: { 'Content-Type': 'text/plain' },
+      body: constante.MENSAJE.ERROR_GENERAL,
+    });
+    return;
+  }
 
   const params = {
     TableName: process.env.DYNAMODB_TABLE,
     Item: {
       //id: uuid.v1(),
       id: data.id,
-      nombre: data.text,
+      nombres: data.nombres,
+      pellidos: data.apellidos,
+      dni: data.dni,
+      direccion: data.direccion,  
       estado: 'activo',
       fechacreacion: timestamp,
       fechaactualizacion: timestamp,
