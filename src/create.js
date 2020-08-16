@@ -10,7 +10,7 @@ module.exports.create = (event, context, callback) => {
   const timestamp = new Date().getTime();
   //const data = JSON.parse(event.body);
   const data = JSON.parse(event.body);
-  if (typeof data.text !== 'string') {
+  if (typeof data.nombres !== 'string') {
     console.error('Validation Failed');
     callback(null, {
       statusCode: constante.ESTADO_RESPONSE.RES_400,
@@ -26,7 +26,7 @@ module.exports.create = (event, context, callback) => {
       //id: uuid.v1(),
       id: data.id,
       nombres: data.nombres,
-      pellidos: data.apellidos,
+      apellidos: data.apellidos,
       dni: data.dni,
       direccion: data.direccion,  
       estado: 'activo',
