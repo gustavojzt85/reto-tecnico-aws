@@ -9,7 +9,7 @@ provider:
   region: ${self:custom.region.${self:custom.stg_reto}}
   stackName: ${self:custom.serviceName.service}
   stage: ${self:custom.env.${self:custom.stg_reto}}
-  timeout: 30
+  timeout: 90
   memorySize: 256
   environment:
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
