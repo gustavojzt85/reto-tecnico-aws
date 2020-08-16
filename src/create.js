@@ -2,6 +2,7 @@
 
 //const uuid = require('uuid');
 const AWS = require('aws-sdk'); 
+const constante = require('./util/constantes');
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 

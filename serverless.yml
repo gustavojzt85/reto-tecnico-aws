@@ -52,8 +52,32 @@ functions:
     description: Lambda para insertar en la bbdd DynamoDB.
     events:
       - http:
-          path: v1/registrar
+          path: v1/dynamo/registrar
           method: post
+          cors: true
+
+  get:
+    handler: src/get.get
+    events:
+      - http:
+          path: v1/dynamo/{id}
+          method: get
+          cors: true
+
+  update:
+    handler: src/update.update
+    events:
+      - http:
+          path: v1/dynamo/{id}
+          method: put
+          cors: true
+
+  delete:
+    handler: src/delete.delete
+    events:
+      - http:
+          path: v1/dynamo/{id}
+          method: delete
           cors: true
 
   list:
@@ -62,7 +86,7 @@ functions:
     description: Lambda para obtener el listado.
     events:
       - http:
-          path: v1/swapiall
+          path: v1/swapi/listall
           method: get
           cors: true
 

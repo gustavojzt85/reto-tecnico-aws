@@ -2,6 +2,9 @@
 
 const AWS = require('aws-sdk'); 
 const swapi = require('swapi-node');// Usado para el consumo del SWAPI
+//const swaggerJsDoc = require('swagger-jsdoc');
+//const swaggerUi = require('swagger-ui-express');
+
 const mapeo = require('./mapping/mapping.js');//Mapedo de campos del servicio
 const constante = require('./util/constantes');
 
@@ -11,6 +14,23 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 const params = {
   TableName: process.env.DYNAMODB_TABLE,
 };
+
+/*const swaggerOptions = {
+    swaggerDefinition:{
+        info: {
+            title: 'Custom API',
+            description: 'Custom API Information',
+            contact: {
+                name: "Amagazin Developer"
+            },
+            servers:[]
+        }
+    },
+    apis:["list.js"]
+};
+
+const swaggerDoc = swaggerJsDoc[swaggerDoc];
+app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDoc));*/
 
 module.exports.list = (event, context, callback) => {
 
@@ -25,7 +45,7 @@ module.exports.list = (event, context, callback) => {
     }).catch(error => {
       const response = {
           statusCode: constante.ESTADO_RESPONSE.RES_400,
-          body: constante.MENSAJE.ERROR_GENERAL,
+          body: constante.ESTADO_ERROR.TIPO_MENSAJE,
         };
         callback(null, response);
     });
