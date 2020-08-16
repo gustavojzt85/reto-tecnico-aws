@@ -48,7 +48,7 @@ custom:
 functions:
   create:
     handler: src/create.create
-    name: ${self:custom.lambda_name}001
+    name: ${self:custom.lambda_name}100
     description: Lambda para insertar en la bbdd DynamoDB.
     events:
       - http:
@@ -58,7 +58,7 @@ functions:
   
   all:
     handler: src/all.obtenertodos
-    name: ${self:custom.lambda_name}001
+    name: ${self:custom.lambda_name}200
     description: Lambda para obtener todos lso registro de la bbdd DynamoDB.
     events:
       - http:
@@ -68,7 +68,7 @@ functions:
 
   get:
     handler: src/get.get
-    name: ${self:custom.lambda_name}002
+    name: ${self:custom.lambda_name}300
     description: Lambda para obtener los elementos
     events:
       - http:
@@ -78,7 +78,7 @@ functions:
 
   update:
     handler: src/update.update
-    name: ${self:custom.lambda_name}003
+    name: ${self:custom.lambda_name}400
     description: Lambda para actualizar el elemnto por id
     events:
       - http:
@@ -88,7 +88,7 @@ functions:
 
   delete:
     handler: src/delete.delete
-    name: ${self:custom.lambda_name}004
+    name: ${self:custom.lambda_name}500
     description: Lambda para obtener los elementos
     events:
       - http:
@@ -98,7 +98,7 @@ functions:
 
   list:
     handler: src/list.list
-    name: ${self:custom.lambda_name}005
+    name: ${self:custom.lambda_name}600
     description: Lambda para obtener el listado SWAPI.
     events:
       - http:
