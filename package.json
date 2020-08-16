@@ -1,0 +1,14 @@
+{
+  "name": "aws-retotecnico",
+  "version": "1.0.0",
+  "description": "Serverless Reto tecnico",
+  "author": "GZUNIGA",
+  "license": "MIT",
+  "dependencies": {
+    "node-json-transform": "^1.1.1",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4",
+    "swapi-node": "^0.6.0",
+    "uuid": "^2.0.3"
+  }
+}

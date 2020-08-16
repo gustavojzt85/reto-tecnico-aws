@@ -1,0 +1,86 @@
+service: aws-retotecnico
+
+frameworkVersion: "1.54.0"
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  profile: ${self:custom.profile.${self:custom.stg_reto}}
+  region: ${self:custom.region.${self:custom.stg_reto}}
+  stackName: ${self:custom.serviceName.service}
+  stage: ${self:custom.env.${self:custom.stg_reto}}
+  timeout: 30
+  memorySize: 256
+  environment:
+    DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+
+custom:
+  stg_reto: ${opt:stage, 'dev'}
+  stg_reto_upper: ${self:custom.env.${self:custom.stg_reto}}
+  project_name: GZUNIGA
+  lambda_name: UE1COM${self:custom.stg_reto_upper}LMB${self:custom.project_name}
+  api_name: UE1NET${self:custom.stg_reto_upper}API${self:custom.project_name}
+
+  env:
+    dev: DEV
+    test: TEST
+
+  region:
+    dev: us-east-1
+    test: us-east-1
+
+  profile:
+    dev: deploy-aws
+
+  # Custom Variable para Service
+  serviceName: ${self:}
+
+functions:
+  create:
+    handler: src/create.create
+    name: ${self:custom.lambda_name}001
+    description: Lambda para insertar en la bbdd DynamoDB.
+    events:
+      - http:
+          path: v1/registrar
+          method: post
+          cors: true
+
+  list:
+    handler: src/list.list
+    name: ${self:custom.lambda_name}002
+    description: Lambda para obtener el listado.
+    events:
+      - http:
+          path: v1/swapiall
+          method: get
+          cors: true
+
+resources:
+  Resources:
+    RetoDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:provider.environment.DYNAMODB_TABLE}
